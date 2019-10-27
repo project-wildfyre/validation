@@ -1,0 +1,18 @@
+
+
+<div tdFullScreen>
+
+
+<!--
+        <td-file-input class="push-left-sm push-right-sm" #fileInput (select)="selectEvent($event)" color="accent"
+                       [(ngModel)]="files">
+            <mat-icon>folder</mat-icon>
+            <span class="text-upper"> Browse...</span>
+        </td-file-input> -->
+        <td-code-editor [value]="input" [(ngModel)]="model" style="height: 500px" theme="vs"
+                        automaticLayout="true"
+                        [language]="json ? 'json' : 'xml'"></td-code-editor>
+
+
+
+</div>

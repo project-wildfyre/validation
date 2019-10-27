@@ -1,0 +1,46 @@
+<mat-menu #resourceMenu>
+    <button mat-menu-item routerLink="/editor">Editor</button>
+    <button mat-menu-item routerLink="/browse">Browse</button>
+    <button mat-menu-item routerLink="/validate">Validate</button>
+</mat-menu>
+<td-layout [class]="'theme-light'">
+    <td-navigation-drawer flex sidenavTitle="Covalent">
+        <span flex></span>
+        <a>Browse</a>
+        <a>Menu</a>
+    </td-navigation-drawer>
+    <td-layout-nav  toolbarTitle="FHIR Browser" navigationRoute="/">
+        <div td-toolbar-content layout="row" layout-align="start center" flex>
+            <span flex></span>
+            <button mat-icon-button matTooltip="Import FHIR Resource" >
+                <mat-icon>folder</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Validation Errors" [matMenuTriggerFor]="notificationsMenu">
+                <td-notification-count color="accent" [notifications]="3">
+                    <mat-icon>notifications</mat-icon>
+                </td-notification-count>
+            </button>
+            <mat-menu #notificationsMenu="matMenu">
+                <td-menu>
+                    <div td-menu-header class="mat-subhead">Alerts</div>
+                    <mat-nav-list dense>
+
+                        <ng-template let-last="last" ngFor let-item [ngForOf]="validationFlags">
+                            <a mat-list-item>
+                                <mat-icon>warning</mat-icon>
+                                <h4 mat-line>
+                                </h4>
+                            </a>
+                            <mat-divider *ngIf="!last"></mat-divider>
+                        </ng-template>
+
+                    </mat-nav-list>
+
+                </td-menu>
+            </mat-menu>
+            <a mat-icon-button matTooltip="Menu" [matMenuTriggerFor]="resourceMenu"><mat-icon>menu</mat-icon></a>
+        </div>
+       <router-outlet></router-outlet>
+    </td-layout-nav>
+</td-layout>
+

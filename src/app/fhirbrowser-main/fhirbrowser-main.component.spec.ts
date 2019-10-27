@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ResourceViewerComponent } from './resource-viewer.component';
+import { FHIRBrowserMainComponent } from './fhirbrowser-main.component';
 
-describe('ResourceViewerComponent', () => {
-  let component: ResourceViewerComponent;
-  let fixture: ComponentFixture<ResourceViewerComponent>;
+describe('FHIRBrowserMainComponent', () => {
+  let component: FHIRBrowserMainComponent;
+  let fixture: ComponentFixture<FHIRBrowserMainComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResourceViewerComponent ]
+      declarations: [ FHIRBrowserMainComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ResourceViewerComponent);
+    fixture = TestBed.createComponent(FHIRBrowserMainComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

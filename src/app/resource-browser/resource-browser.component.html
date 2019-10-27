@@ -1,0 +1,22 @@
+<div class="body">
+<mat-sidenav-container fullscreen>
+    <mat-sidenav mode="side" opened>
+        <mat-nav-list>
+            <ng-template let-item let-last="last" ngFor [ngForOf]="navmenu">
+                <a mat-list-item>
+                    <mat-icon matListAvatar>{{item.icon}}</mat-icon>
+                    <h3 matLine> {{item.title}} </h3>
+                    <p matLine> {{item.description}} </p>
+                </a>
+                <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+            </ng-template>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="body">
+            <td-json-formatter [data]="object" key="root" [levelsOpen]="3">
+            </td-json-formatter>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+</div>
