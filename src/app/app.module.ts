@@ -26,7 +26,7 @@ import {
     CovalentFileModule,
     CovalentJsonFormatterModule,
     CovalentMediaModule,
-    CovalentMenuModule,
+    CovalentMenuModule, CovalentMessageModule,
     CovalentNotificationsModule,
     CovalentTabSelectModule
 } from "@covalent/core";
@@ -36,6 +36,8 @@ import { ResourceBrowserComponent } from './resource-browser/resource-browser.co
 import { ResourceValidatorComponent } from './resource-validator/resource-validator.component';
 import {MatButtonModule} from "@angular/material/button";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
   declarations: [
@@ -76,6 +78,9 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         CovalentMenuModule,
         MatButtonModule,
         MatTooltipModule,
+        CovalentMessageModule,
+        MatFormFieldModule,
+        MatTableModule
     ],
   providers: [],
   bootstrap: [AppComponent]
