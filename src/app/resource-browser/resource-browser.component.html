@@ -1,5 +1,5 @@
 <div class="body">
-    <span *ngIf="entries != undefined && entries.length >0">
+   <!-- <span *ngIf="entries != undefined && entries.length >0"> -->
 <mat-sidenav-container fullscreen>
     <mat-sidenav mode="side" opened>
         <mat-nav-list>
@@ -16,11 +16,11 @@
     <mat-sidenav-content>
         <div class="body">
             <mat-card>
-            <td-json-formatter [data]="resource" key="root" [levelsOpen]="3">
+            <td-json-formatter [data]="resource" key="root" [levelsOpen]="8">
             </td-json-formatter>
                 </mat-card>
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>
-        </span>
+
 </div>
