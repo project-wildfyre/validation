@@ -1,53 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Bundle, BundleEntry} from "fhir-stu3";
+import {BrowserService} from "../browser.service";
 
 @Component({
   selector: 'app-resource-browser',
   templateUrl: './resource-browser.component.html',
   styleUrls: ['./resource-browser.component.scss']
 })
-export class ResourceBrowserComponent implements OnInit {
+export class ResourceBrowserComponent implements OnInit, AfterViewInit {
 
-  constructor() { }
+  constructor(public browserService: BrowserService) { }
 
-  navmenu: Object[] = [{
-    icon: 'looks_one',
-    route: '.',
-    title: 'MedicationStatement',
-    description: '6bff710a-0bdc-4c9b-b98b-40db0a107edc',
-  }, {
-    icon: 'looks_two',
-    route: '.',
-    title: 'MedicationRequest',
-    description: 'plan <br> id',
-  }, {
-    icon: 'looks_3',
-    route: '.',
-    title: 'Third item',
-    description: 'Item description',
-  }, {
-    icon: 'looks_4',
-    route: '.',
-    title: 'Fourth item',
-    description: 'Item description',
-  }, {
-    icon: 'looks_5',
-    route: '.',
-    title: 'Fifth item',
-    description: 'Item description',
-  },{
-    icon: 'looks_two',
-    route: '.',
-    title: 'Second item',
-    description: 'Item description',
-  }, {
-    icon: 'looks_3',
-    route: '.',
-    title: 'Third item',
-    description: 'Item description',
-  },
-  ];
+  entries: BundleEntry[];
 
-  object = {
+  resource = {
     "resourceType": "MedicationStatement",
     "id": "6bff710a-0bdc-4c9b-b98b-40db0a107edc",
     "meta": {
@@ -100,6 +66,36 @@ export class ResourceBrowserComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.browserService.getResourceChangeEmitter().subscribe(
+        (result) => {
+          var bundle: Bundle = this.convertToJson(result);
+          if (bundle != undefined && bundle.entry != undefined) {
+            console.log('entries = ' + bundle.total);
+            this.entries = bundle.entry;
+          }
+        }
+    )
+  }
+
+  ngAfterViewInit() {
+    console.log('after init');
+    if (this.browserService.getResource() !== undefined) {
+      const data = this.browserService.getResource();
+      var bundle: Bundle = this.convertToJson(data);
+      if (bundle != undefined && bundle.entry != undefined) {
+        console.log('entries = ' + bundle.total);
+        this.entries = bundle.entry;
+      }
+
+    }
+  }
+
+  onClick(entry) {
+    this.resource = entry.resource;
+  }
+  convertToJson(data): Bundle {
+    var object = JSON.parse(data);
+    return object;
   }
 
 }

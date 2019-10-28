@@ -41,7 +41,11 @@ export class BrowserService {
 
   setResource(resource : any) {
      this.resource = resource;
-     this.postContentType('Bundle/$validate',resource,'application/fhir+xml').subscribe(
+     let contentType = 'application/fhir+xml';
+     if (resource[0] == '{') {
+         contentType = 'application/fhir+json';
+     }
+     this.postContentType('Bundle/$validate',resource,contentType).subscribe(
          data => {
 
              this.validation = data;
