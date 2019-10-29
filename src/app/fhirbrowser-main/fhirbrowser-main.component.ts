@@ -48,7 +48,7 @@ export class FHIRBrowserMainComponent implements OnInit {
     this.validationFlags[1].count = 0;
     this.validationFlags[2].count = 0;
     for(const item of this.validation.issue) {
-      console.log(item);
+
      // if (item.severity == 'error' || item.severity == 'warning' ) this.errorCount++;
       switch (item.severity) {
         case 'error':

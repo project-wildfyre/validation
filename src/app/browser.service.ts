@@ -28,7 +28,8 @@ export class BrowserService {
     return this.resource;
   }
 
-  getValidationResult() {
+  getValidationResult() : OperationOutcome {
+      //let validation = JSON.parse(this.validation);
       return this.validation;
   }
 
@@ -36,7 +37,7 @@ export class BrowserService {
     return this.conformanceChange;
   }
     getValidationChangeEmitter() {
-        return this.conformanceChange;
+        return this.validationChange;
     }
 
   setResource(resource : any) {
