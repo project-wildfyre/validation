@@ -1,0 +1,20 @@
+
+
+<div tdFullScreen>
+     <div td-toolbar-content [class]="'theme-light'" layout="row" layout-align="start" flex>
+          <div>&nbsp;</div>
+          <mat-form-field>
+               <mat-select [(value)]="format">
+                    <mat-option value="json">JSON</mat-option>
+                    <mat-option value="xml">XML</mat-option>
+               </mat-select>
+          </mat-form-field>
+          <span flex></span>
+          <button mat-stroked-button color="accent" [matTooltip]="'Validate'" class="text-upper" (click)="validate()"><mat-icon>done</mat-icon></button>
+
+     </div>
+     <td-code-editor tdFullScreen [(ngModel)]="model" style="height: 1000px; box-sizing: border-box;" theme="vs"
+                        automaticLayout="true"
+                        [language]="format"></td-code-editor>
+
+</div>

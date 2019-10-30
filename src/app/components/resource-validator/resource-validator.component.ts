@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {BrowserService} from "../browser.service";
+import {BrowserService} from "../../services/browser.service";
 import {OperationOutcome, OperationOutcomeIssue} from "fhir-stu3";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";

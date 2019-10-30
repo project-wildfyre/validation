@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, OnInit} from '@angular/core';
 import {TdMediaService} from "@covalent/core";
-import {BrowserService} from "../browser.service";
+import {BrowserService} from "../../services/browser.service";
 
 @Component({
   selector: 'app-resource-viewer',
@@ -19,7 +19,11 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
       "\"...\" \n"+
       '}';
 
-  public json = true;
+  public format="json";
+
+  validate() {
+      this.browserService.setupResource(this.model);
+  }
 
   ngOnInit() {
       this.browserService.getRawResourceChangeEmitter().subscribe(
@@ -29,9 +33,9 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
 
               this.model = data.trim();
               if (this.model[0] =='<')  {
-                  this.json = false;
+                  this.format = 'xml';
               } else {
-                  this.json = true;
+                  this.format = 'json';
               }
           }
       )
@@ -42,11 +46,13 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
 
             this.model = this.browserService.getRawResource().trim();
             if (this.model[0]=='<')  {
-                this.json = false;
+                this.format = 'xml';
             } else {
-                this.json = true;
+                this.format ='json';
             }
 
         }
     }
+
+
 }

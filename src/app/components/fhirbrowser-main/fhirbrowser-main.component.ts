@@ -1,6 +1,8 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
-import {BrowserService} from "../browser.service";
+import {Component, EventEmitter, OnInit, ViewContainerRef} from '@angular/core';
+import {BrowserService} from "../../services/browser.service";
 import {OperationOutcome} from "fhir-stu3";
+import {MessageService} from "../../services/message.service";
+import {IAlertConfig, TdDialogService} from "@covalent/core";
 
 @Component({
   selector: 'app-fhirbrowser-main',
@@ -9,7 +11,11 @@ import {OperationOutcome} from "fhir-stu3";
 })
 export class FHIRBrowserMainComponent implements OnInit {
 
-  constructor(public browserService : BrowserService) {
+  constructor(public browserService : BrowserService,
+              public messageService: MessageService,
+              private _dialogService: TdDialogService,
+              private _viewContainerRef: ViewContainerRef) {
+
       this.browserService.getValidationChangeEmitter().subscribe(
           results => {
             this.validation = results;
@@ -24,7 +30,7 @@ export class FHIRBrowserMainComponent implements OnInit {
 
   private validation: OperationOutcome;
 
-  public errorCount;
+  public errorCount = 0;
 
   public validationFlags: any = [
     { 'item' : 'Errors',
@@ -39,7 +45,25 @@ export class FHIRBrowserMainComponent implements OnInit {
       ];
 
   ngOnInit() {
+    this.messageService.getMessageEvent().subscribe(
+        error => {
+
+            const alertConfig: IAlertConfig = {
+              message: error
+            };
+            alertConfig.disableClose = false; // defaults to false
+            alertConfig.viewContainerRef = this._viewContainerRef;
+            alertConfig.title = 'Alert'; // OPTIONAL, hides if not provided
+
+            alertConfig.width = '400px'; // OPTIONAL, defaults to 400px
+            this._dialogService.openConfirm(alertConfig).afterClosed().subscribe((accept: boolean) => {
+
+            });
+
+        });
+
   }
+
 
   public getErrorCount () {
     if (this.validation === undefined) return 0;
@@ -92,5 +116,7 @@ export class FHIRBrowserMainComponent implements OnInit {
 
     }
   }
+
+
 
 }

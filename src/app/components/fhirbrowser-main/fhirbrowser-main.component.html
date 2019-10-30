@@ -16,7 +16,7 @@
                            [(ngModel)]="files">
                 <mat-icon>folder</mat-icon>
             </td-file-input>
-            <button mat-icon-button matTooltip="Validation Errors" [matMenuTriggerFor]="notificationsMenu">
+            <button mat-icon-button [disabled]="errorCount==0" matTooltip="Validation Errors" [matMenuTriggerFor]="notificationsMenu">
                 <td-notification-count color="accent" [notifications]="errorCount">
                     <mat-icon>notifications</mat-icon>
                 </td-notification-count>
@@ -29,7 +29,7 @@
                             <a mat-list-item>
                                 <td-notification-count color="warn" [notifications]="item.count">
                                 </td-notification-count>
-                                <mat-icon>{{item.icon}}</mat-icon>
+                                <!-- <mat-icon>{{item.icon}}</mat-icon> -->
                                 <h4 mat-line>
                                     {{item.item}}
                                 </h4>

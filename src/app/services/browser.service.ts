@@ -1,7 +1,8 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {OperationOutcome} from "fhir-stu3";
+import {MessageService} from "./message.service";
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class BrowserService {
   private rawResourceChange: EventEmitter<any> = new EventEmitter();
   private validationChange: EventEmitter<any> = new EventEmitter();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private messageService: MessageService) {
 
   }
 
@@ -81,7 +82,29 @@ export class BrowserService {
      resource => {
          this.setResource(resource);
          this.validateResource(resource);
-     });
+     }, error => {
+
+          if (error instanceof HttpErrorResponse) {
+              const httpError: HttpErrorResponse = error;
+             this.processHttpError(httpError);
+          } else {
+              this.messageService.addMessage(error);
+          }
+      });
+  }
+
+  processHttpError(httpError : HttpErrorResponse) {
+      let message = "";
+      const outcome: OperationOutcome = httpError.error;
+      console.log(httpError.error);
+      if (outcome != undefined) {
+          for (const issue of outcome.issue) {
+              message = issue.diagnostics;
+          }
+      } else {
+          message = httpError.message;
+      }
+      this.messageService.addMessage(message);
   }
 
   public validateResource(resource) {
@@ -89,8 +112,13 @@ export class BrowserService {
           data => {
               this.setValidation(data);
           },
-          err => {
-              console.log(err);
+          error => {
+              if (error instanceof HttpErrorResponse) {
+                  const httpError: HttpErrorResponse = error;
+                  this.processHttpError(httpError);
+              } else {
+                  this.messageService.addMessage(error);
+              }
           }
       );
   }
