@@ -12,9 +12,9 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
   constructor(public media: TdMediaService, public browserService: BrowserService) { }
 
   // Code Editor
-  model: any;
 
-  input: string = '{ \n' +
+
+  model: string = '{ \n' +
       "\t\"resourceType\" :" +
       "\"...\" \n"+
       '}';
@@ -22,29 +22,31 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
   public json = true;
 
   ngOnInit() {
-      this.browserService.getResourceChangeEmitter().subscribe(
+      this.browserService.getRawResourceChangeEmitter().subscribe(
           (data) => {
-               this.input = data.trim();
 
-               if (this.input[0]=='<')  {
-                 this.json = false;
-               } else {
-                 this.json = true;
-               }
 
+
+              this.model = data.trim();
+              if (this.model[0] =='<')  {
+                  this.json = false;
+              } else {
+                  this.json = true;
+              }
           }
       )
   }
     ngAfterViewInit() {
         // console.log('after init');
-        if (this.browserService.getResource() !== undefined) {
-            this.input = this.browserService.getResource().trim();
+        if (this.browserService.getRawResource() !== undefined) {
 
-            if (this.input[0]=='<')  {
+            this.model = this.browserService.getRawResource().trim();
+            if (this.model[0]=='<')  {
                 this.json = false;
             } else {
                 this.json = true;
             }
+
         }
     }
 }

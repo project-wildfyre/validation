@@ -10,7 +10,7 @@ import {OperationOutcome} from "fhir-stu3";
 export class FHIRBrowserMainComponent implements OnInit {
 
   constructor(public browserService : BrowserService) {
-      this.browserService.validationChange.subscribe(
+      this.browserService.getValidationChangeEmitter().subscribe(
           results => {
             this.validation = results;
             this.getErrorCount();
@@ -72,7 +72,7 @@ export class FHIRBrowserMainComponent implements OnInit {
       let reader = new FileReader();
       reader.readAsText(file);
       this.loadComplete.subscribe( (data) => {
-            this.browserService.setResource(data);
+            this.browserService.setupResource(data);
           }
       );
       const me = this;
@@ -91,18 +91,6 @@ export class FHIRBrowserMainComponent implements OnInit {
       };
 
     }
-  }
-
-  uploadEvent(files: FileList | File): void {
-    if (files instanceof FileList) {
-
-    } else {
-
-    }
-  }
-
-  cancelEvent(): void {
-
   }
 
 }

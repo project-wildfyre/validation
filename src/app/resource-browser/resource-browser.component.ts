@@ -25,7 +25,7 @@ export class ResourceBrowserComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.browserService.getResourceChangeEmitter().subscribe(
         (result) => {
-          var bundle: Bundle = this.convertToJson(result);
+          const bundle: Bundle = result;
           if (bundle != undefined && bundle.entry != undefined) {
             console.log('entries = ' + bundle.total);
             this.entries = bundle.entry;
@@ -43,7 +43,7 @@ export class ResourceBrowserComponent implements OnInit, AfterViewInit {
     console.log('after init');
     if (this.browserService.getResource() !== undefined) {
       const data = this.browserService.getResource();
-      var bundle: Bundle = this.convertToJson(data);
+      const bundle: Bundle = data;
       if (bundle != undefined && bundle.entry != undefined) {
         console.log('entries = ' + bundle.total);
         this.entries = bundle.entry;
@@ -71,10 +71,13 @@ export class ResourceBrowserComponent implements OnInit, AfterViewInit {
     this.dataSource.data = entryIssues;
   }
 
+  /*
   convertToJson(data): Bundle {
     var object = JSON.parse(data);
     return object;
   }
+  *
+   */
 
   getIcon(i) {
     return 'code';

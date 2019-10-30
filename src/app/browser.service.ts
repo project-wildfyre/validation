@@ -8,17 +8,19 @@ import {OperationOutcome} from "fhir-stu3";
 })
 export class BrowserService {
 
-  resource : any;
+  private resource : any;
 
+  private rawResource : string;
 
-    validation: OperationOutcome;
+  private validation: OperationOutcome;
 
   private config: any = {
-    'baseUrl': 'https://data.developer.nhs.uk/ccri-fhir/STU3/'
+    'baseUrl': 'http://localhost:8186/ccri-fhir/STU3/'
   };
 
-  conformanceChange: EventEmitter<any> = new EventEmitter();
-  validationChange: EventEmitter<any> = new EventEmitter();
+  private resourceChange: EventEmitter<any> = new EventEmitter();
+  private rawResourceChange: EventEmitter<any> = new EventEmitter();
+  private validationChange: EventEmitter<any> = new EventEmitter();
 
   constructor(private http: HttpClient) {
 
@@ -28,35 +30,69 @@ export class BrowserService {
     return this.resource;
   }
 
+    getRawResource() {
+          return this.rawResource;
+    }
+
   getValidationResult() : OperationOutcome {
       //let validation = JSON.parse(this.validation);
       return this.validation;
   }
 
+    getRawResourceChangeEmitter() {
+        return this.rawResourceChange;
+    }
+
   getResourceChangeEmitter() {
-    return this.conformanceChange;
+    return this.resourceChange;
   }
     getValidationChangeEmitter() {
         return this.validationChange;
     }
 
-  setResource(resource : any) {
-     this.resource = resource;
+    setValidation(result) {
+        this.validation = result;
+        this.validationChange.emit(result);
+    }
+    setResource(result) {
+        this.resource = result;
+        this.resourceChange.emit(result);
+    }
+
+
+    setRawResource(resource) {
+        this.rawResource = resource;
+        this.getRawResourceChangeEmitter().emit(this.rawResource);
+    }
+
+  setupResource(resource : any) {
+
      let contentType = 'application/fhir+xml';
      if (resource[0] == '{') {
          contentType = 'application/fhir+json';
      }
-     this.postContentType('Bundle/$validate',resource,contentType).subscribe(
-         data => {
+     // Clear previous results
+      this.setRawResource(resource); // For editor
+      this.setResource(undefined); // For browser
+      this.setValidation(undefined); // for browser and validate
 
-             this.validation = data;
-             this.validationChange.emit(data);
-         },
-         err => {
-             console.log(err);
-         }
-     );
-     this.conformanceChange.emit(resource);
+     // Call to enforce resource is in correct format (json)
+      this.postContentType('$convert',resource,contentType).subscribe(
+     resource => {
+         this.setResource(resource);
+         this.validateResource(resource);
+     });
+  }
+
+  public validateResource(resource) {
+      this.postContentType('$validate',resource,'application/fhir+json').subscribe(
+          data => {
+              this.setValidation(data);
+          },
+          err => {
+              console.log(err);
+          }
+      );
   }
 
     public postContentType(resource: string, body: any, contentType): Observable<any> {

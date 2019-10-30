@@ -16,10 +16,14 @@ export class ResourceValidatorComponent implements OnInit, AfterViewInit {
   public dataSource = new MatTableDataSource<OperationOutcomeIssue>();
 
   constructor(public browserService : BrowserService) {
-    this.browserService.validationChange.subscribe(
+    this.browserService.getValidationChangeEmitter().subscribe(
         results => {
           this.operationOutcome = results;
-          this.dataSource.data = this.operationOutcome.issue;
+          if (results != undefined) {
+            this.dataSource.data = this.operationOutcome.issue;
+          } else {
+            this.dataSource.data = [];
+          }
         }
     )
   }
@@ -39,7 +43,12 @@ export class ResourceValidatorComponent implements OnInit, AfterViewInit {
     // console.log('after init');
     this.dataSource.sort = this.sort;
     this.operationOutcome = this.browserService.getValidationResult();
-    this.dataSource.data = this.operationOutcome.issue;
+
+    if (this.operationOutcome != undefined) {
+      this.dataSource.data = this.operationOutcome.issue;
+    } else {
+      this.dataSource.data = [];
+    }
 
   }
 
