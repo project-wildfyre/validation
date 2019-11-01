@@ -56,7 +56,7 @@ export class FHIRBrowserMainComponent implements OnInit {
             alertConfig.title = 'Alert'; // OPTIONAL, hides if not provided
 
             alertConfig.width = '400px'; // OPTIONAL, defaults to 400px
-            this._dialogService.openConfirm(alertConfig).afterClosed().subscribe((accept: boolean) => {
+            this._dialogService.openAlert(alertConfig).afterClosed().subscribe((accept: boolean) => {
 
             });
 

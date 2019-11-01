@@ -105,11 +105,11 @@ export class ResourceBrowserComponent implements OnInit, AfterViewInit {
   getErrorsCount(i) {
      let count = 0;
      if (this.operationOutcome != undefined) {
-       console.log(this.operationOutcome);
+
        for (const issue of this.operationOutcome.issue) {
          if (issue.location != undefined) {
            for (const location of issue.location) {
-             if (location.includes('entry[' + i + ']')) count++;
+             if (location.includes('Bundle.entry[' + i + ']')) count++;
              else
              if (this.entries.length == 1) count++;
            }
