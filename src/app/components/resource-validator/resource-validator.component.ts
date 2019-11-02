@@ -28,7 +28,7 @@ export class ResourceValidatorComponent implements OnInit, AfterViewInit {
     )
   }
 
-  displayedColumns = ['icon', 'severity', 'diagnostics', 'location'];
+  displayedColumns = ['icon',  'diagnostics', 'location'];
 
   public operationOutcome : OperationOutcome;
 

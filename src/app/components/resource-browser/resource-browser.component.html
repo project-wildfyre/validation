@@ -9,8 +9,7 @@
                         <mat-icon matListAvatar>{{getIcon(i)}}</mat-icon>
                     </td-notification-count>
                     <h3 matLine> {{entry.resource.resourceType}}  </h3>
-                    <p matLine> {{entry.fullUrl}}
-
+                    <p matLine>  {{entry.fullUrl}}
                     </p>
                 </a>
                 <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
@@ -25,7 +24,7 @@
                 {{resource.resourceType}}
 
                     </mat-card-title>
-                <p>{{resource.id}}</p>
+                <p> &nbsp; {{resource.id}}</p>
             </mat-card>
                 </span>
                 <span *ngIf="operationOutcome !== undefined">
@@ -38,13 +37,16 @@
 
         <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
           <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef width="5%"> </th>
+            <th mat-header-cell *matHeaderCellDef width="10%"> </th>
             <td mat-cell *matCellDef="let issue">
               <span *ngIf="issue.severity === 'error' || issue.severity === 'fatal'">
-                <mat-icon color="warn">error</mat-icon>
+                <mat-icon [matTooltip]="issue.severity" color="warn">error</mat-icon>
               </span>
               <span *ngIf="issue.severity === 'warning'">
-                <mat-icon color="accent">warning</mat-icon>
+                <mat-icon [matTooltip]="issue.severity" color="accent">warning</mat-icon>
+              </span>
+             <span *ngIf="issue.severity === 'information'">
+                <mat-icon [matTooltip]="issue.severity"  color="information">information</mat-icon>
               </span>
           </ng-container>
 

@@ -18,7 +18,7 @@ export class ResourceBrowserComponent implements OnInit, AfterViewInit {
 
   public dataSource = new MatTableDataSource<OperationOutcomeIssue>();
 
-  displayedColumns = ['icon', 'severity', 'diagnostics', 'location'];
+  displayedColumns = ['icon',  'diagnostics', 'location'];
 
   resource;
 
