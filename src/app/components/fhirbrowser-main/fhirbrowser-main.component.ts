@@ -4,6 +4,8 @@ import {OperationOutcome} from "fhir-stu3";
 import {MessageService} from "../../services/message.service";
 import {IAlertConfig, TdDialogService} from "@covalent/core";
 
+
+
 @Component({
   selector: 'app-fhirbrowser-main',
   templateUrl: './fhirbrowser-main.component.html',
@@ -35,12 +37,15 @@ export class FHIRBrowserMainComponent implements OnInit {
   public validationFlags: any = [
     { 'item' : 'Errors',
       'count' : '0',
+      'colour' : 'warn',
       'icon': 'error'},
     { 'item' : 'Warnings',
       'count' : '0',
+      'colour' : 'accent',
     'icon' : 'warning'},
     { 'item' : 'Information',
       'count' : '0',
+      'colour' : 'information',
       'icon': 'info'}
       ];
 
@@ -64,13 +69,16 @@ export class FHIRBrowserMainComponent implements OnInit {
 
   }
 
-
-  public getErrorCount () {
-    if (this.validation === undefined) return 0;
+  private clearErrors() {
     this.errorCount = 0;
     this.validationFlags[0].count = 0;
     this.validationFlags[1].count = 0;
     this.validationFlags[2].count = 0;
+  }
+
+  public getErrorCount () {
+    if (this.validation === undefined) return 0;
+    this.clearErrors();
     for(const item of this.validation.issue) {
 
      // if (item.severity == 'error' || item.severity == 'warning' ) this.errorCount++;
@@ -91,11 +99,17 @@ export class FHIRBrowserMainComponent implements OnInit {
     console.log('Validation Errors = '+ this.errorCount);
   }
 
+  async doReadFile(event: any): Promise<void> {
+    let file: File = event.srcElement.files[0];
+    this.selectEvent(file);
+  }
+
   selectEvent(file: FileList | File): void {
     if (file instanceof File) {
       let reader = new FileReader();
       reader.readAsText(file);
       this.loadComplete.subscribe( (data) => {
+            this.clearErrors();
             this.browserService.setupResource(data);
           }
       );

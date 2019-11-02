@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, EventEmitter, OnInit} from '@angular/core';
 import {TdMediaService} from "@covalent/core";
 import {BrowserService} from "../../services/browser.service";
+import {saveAs as importedSaveAs} from "file-saver";
 
 @Component({
   selector: 'app-resource-viewer',
@@ -29,8 +30,6 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
       this.browserService.getRawResourceChangeEmitter().subscribe(
           (data) => {
 
-
-
               this.model = data.trim();
               if (this.model[0] =='<')  {
                   this.format = 'xml';
@@ -51,6 +50,19 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
                 this.format ='json';
             }
 
+        }
+    }
+
+    save(){
+        {
+
+            if (this.model[0]=='<')  {
+                this.format = 'xml';
+            } else {
+                this.format ='json';
+            }
+            const blob = new Blob([this.model], { type: 'text/'+this.format });
+            importedSaveAs(blob);
         }
     }
 
