@@ -31,12 +31,22 @@ export class BrowserService {
     return this.resource;
   }
 
+    triggerGetRawResource() {
+          return this.getRawResourceChangeEmitter().emit(this.rawResource);
+    }
+
+    triggerGetResource() {
+        return this.getResourceChangeEmitter().emit(this.resource);
+    }
+    triggerGetValidationResult() {
+        return this.getValidationChangeEmitter().emit(this.validation);
+    }
+
     getRawResource() {
-          return this.rawResource;
+        return this.rawResource;
     }
 
   getValidationResult() : OperationOutcome {
-      //let validation = JSON.parse(this.validation);
       return this.validation;
   }
 
@@ -73,9 +83,10 @@ export class BrowserService {
          contentType = 'application/fhir+json';
      }
      // Clear previous results
+      this.setValidation(undefined); // for browser and validate
       this.setRawResource(resource); // For editor
       this.setResource(undefined); // For browser
-      this.setValidation(undefined); // for browser and validate
+
 
      // Call to enforce resource is in correct format (json)
       this.postContentType('$convert',resource,contentType).subscribe(
@@ -124,7 +135,7 @@ export class BrowserService {
   }
 
     public postContentType(resource: string, body: any, contentType): Observable<any> {
-        console.log('ContentType = ' + contentType);
+
         let headers: HttpHeaders = this.getHeaders(false);
         headers = headers.append('Content-Type', contentType);
         headers = headers.append('Accept', 'application/fhir+json');

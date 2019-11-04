@@ -24,7 +24,7 @@ import {
     CovalentCommonModule, CovalentDialogsModule,
     CovalentExpansionPanelModule,
     CovalentFileModule,
-    CovalentJsonFormatterModule,
+    CovalentJsonFormatterModule, CovalentLoadingModule,
     CovalentMediaModule,
     CovalentMenuModule, CovalentMessageModule,
     CovalentNotificationsModule,
@@ -44,6 +44,7 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ErrorsHandler} from "./error-handler";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatSelectModule} from "@angular/material/select";
+import {MatSortModule} from "@angular/material/sort";
 
 @NgModule({
   declarations: [
@@ -67,6 +68,9 @@ import {MatSelectModule} from "@angular/material/select";
         MatCardModule,
         MatButtonModule,
         MatTooltipModule,
+        MatRadioModule,
+        MatSelectModule,
+
 
         CovalentLayoutModule,
         CovalentStepsModule,
@@ -87,8 +91,8 @@ import {MatSelectModule} from "@angular/material/select";
         CovalentMenuModule,
         CovalentMessageModule,
         CovalentDialogsModule,
-        MatRadioModule,
-        MatSelectModule
+        CovalentLoadingModule,
+        MatSortModule,
 
     ],
   providers: [

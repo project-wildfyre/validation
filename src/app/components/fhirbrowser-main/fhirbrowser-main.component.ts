@@ -64,6 +64,19 @@ export class FHIRBrowserMainComponent implements OnInit {
             this._dialogService.openAlert(alertConfig).afterClosed().subscribe((accept: boolean) => {
 
             });
+            let outcome: OperationOutcome = {
+              "issue": [
+                {
+                  "severity": "error",
+                  "code" : "structure",
+                  "details": {
+                    "text": error
+                  },
+                  "diagnostics": error
+                }
+              ]
+            };
+            this.browserService.setValidation(outcome);
 
         });
 

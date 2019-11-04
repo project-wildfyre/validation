@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, EventEmitter, OnInit} from '@angular/core';
-import {TdMediaService} from "@covalent/core";
+import {TdLoadingService, TdMediaService} from "@covalent/core";
 import {BrowserService} from "../../services/browser.service";
 import {saveAs as importedSaveAs} from "file-saver";
 
@@ -10,10 +10,10 @@ import {saveAs as importedSaveAs} from "file-saver";
 })
 export class ResourceEditorComponent implements OnInit, AfterViewInit {
 
-  constructor(public media: TdMediaService, public browserService: BrowserService) { }
+  constructor(public media: TdMediaService, public browserService: BrowserService,
+              private _loadingService: TdLoadingService) { }
 
   // Code Editor
-
 
   model: string = '{ \n' +
       "\t\"resourceType\" :" +
@@ -23,10 +23,13 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
   public format="json";
 
   validate() {
+      //this._loadingService.register('overlayStarSyntax');
       this.browserService.setupResource(this.model);
   }
 
   ngOnInit() {
+
+
       this.browserService.getRawResourceChangeEmitter().subscribe(
           (data) => {
 
@@ -37,25 +40,34 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
                   this.format = 'json';
               }
           }
-      )
+      );
+
+      this.browserService.getValidationChangeEmitter().subscribe(
+          (data) => {
+              if (data == undefined) {
+                  // Is Validating
+                  this._loadingService.register('overlayStarSyntax');
+              } else {
+                  this._loadingService.resolve('overlayStarSyntax');
+              }
+          }
+      );
+
+      if (this.browserService.getRawResource() !== undefined) {
+          console.log('trigger getRawResource');
+          this.browserService.triggerGetRawResource();
+      }
+
   }
     ngAfterViewInit() {
         // console.log('after init');
-        if (this.browserService.getRawResource() !== undefined) {
 
-            this.model = this.browserService.getRawResource().trim();
-            if (this.model[0]=='<')  {
-                this.format = 'xml';
-            } else {
-                this.format ='json';
-            }
 
-        }
+
     }
 
     save(){
         {
-
             if (this.model[0]=='<')  {
                 this.format = 'xml';
             } else {

@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Bundle, BundleEntry, OperationOutcome, OperationOutcomeIssue} from "fhir-stu3";
 import {BrowserService} from "../../services/browser.service";
 import {MatTableDataSource} from "@angular/material/table";
+import {TdLoadingService} from "@covalent/core";
 
 @Component({
   selector: 'app-resource-browser',
@@ -10,7 +11,8 @@ import {MatTableDataSource} from "@angular/material/table";
 })
 export class ResourceBrowserComponent implements OnInit, AfterViewInit {
 
-  constructor(public browserService: BrowserService) { }
+  constructor(public browserService: BrowserService,
+              private _loadingService: TdLoadingService) { }
 
   entries: BundleEntry[];
 
@@ -27,35 +29,45 @@ export class ResourceBrowserComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.browserService.getResourceChangeEmitter().subscribe(
         (result) => {
+
           this.processEntry(result);
         }
     );
     this.browserService.getValidationChangeEmitter().subscribe(
         (results) => {
-          this.operationOutcome = results;
-          if (this.entries != undefined && this.entries[this.selectedEntry] != undefined) {
-             this.onClick(this.entries[this.selectedEntry],this.selectedEntry);
+          if (results == undefined) {
+
+            this._loadingService.register('overlayStarSyntax');
+          } else {
+
+            this._loadingService.resolve('overlayStarSyntax');
+            this.operationOutcome = results;
+            if (this.entries != undefined && this.entries[this.selectedEntry] != undefined) {
+              this.onClick(this.entries[this.selectedEntry], this.selectedEntry);
+            }
           }
         }
-    )
+    );
+    console.log('after setting up subscribers');
+    if (this.browserService.getResource() !== undefined) {
+      this.browserService.triggerGetResource();
+    }
+    if (this.browserService.getValidationResult() != undefined) {
+      this.browserService.triggerGetValidationResult();
+    }
   }
 
   ngAfterViewInit() {
-    console.log('after init');
-    if (this.browserService.getResource() !== undefined) {
-      const data = this.browserService.getResource();
-      this.processEntry(data);
-    }
-    this.operationOutcome = this.browserService.getValidationResult();
+
   }
 
   processEntry(data: any) {
     const bundle: Bundle = data;
-    console.log(data);
+
     if (bundle != undefined) {
       if (bundle.resourceType == 'Bundle') {
         if (bundle.entry != undefined) {
-          console.log('entries = ' + bundle.total);
+
           this.entries = bundle.entry;
           if (bundle.entry.length > 0) {
             this.onClick(bundle.entry[0], 0);
@@ -82,7 +94,7 @@ export class ResourceBrowserComponent implements OnInit, AfterViewInit {
       for (const issue of this.operationOutcome.issue) {
         if (issue.location != undefined) {
           for (const location of issue.location) {
-            if (location.includes('entry[' + i + ']')) {
+            if (location.includes('Bundle.entry[' + i + ']')) {
               entryIssues.push(issue);
             } else {
               // Not a bundle so include all
@@ -92,7 +104,6 @@ export class ResourceBrowserComponent implements OnInit, AfterViewInit {
         }
       }
     }
-    console.log(entryIssues.length);
     this.dataSource.data = entryIssues;
   }
 

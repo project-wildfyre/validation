@@ -1,23 +1,24 @@
 
+<div *tdLoading="'overlayStarSyntax'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
+     <div tdFullScreen>
+          <div td-toolbar-content layout="row" layout-align="start" flex>
+               <div>&nbsp;</div>
 
-<div tdFullScreen>
-     <div td-toolbar-content layout="row" layout-align="start" flex>
-          <div>&nbsp;</div>
 
+               <button mat-stroked-button color="accent" [matTooltip]="'Save'" class="text-upper" (click)="save()"><mat-icon>save</mat-icon></button>
 
-          <button mat-stroked-button color="accent" [matTooltip]="'Save'" class="text-upper" (click)="save()"><mat-icon>save</mat-icon></button>
+               <button mat-stroked-button color="accent" [matTooltip]="'Validate'" class="text-upper" (click)="validate()"><mat-icon>done</mat-icon></button>
+               <span flex></span>
+               <mat-form-field color="accent">
+                    <mat-select [(value)]="format" >
+                         <mat-option value="json">JSON</mat-option>
+                         <mat-option value="xml">XML</mat-option>
+                    </mat-select>
+               </mat-form-field>
+          </div>
+          <td-code-editor tdFullScreen [(ngModel)]="model" style="height: 1000px; box-sizing: border-box;" theme="vs"
+                             automaticLayout="true"
+                             [language]="format"></td-code-editor>
 
-          <button mat-stroked-button color="accent" [matTooltip]="'Validate'" class="text-upper" (click)="validate()"><mat-icon>done</mat-icon></button>
-          <span flex></span>
-          <mat-form-field color="accent">
-               <mat-select [(value)]="format" >
-                    <mat-option value="json">JSON</mat-option>
-                    <mat-option value="xml">XML</mat-option>
-               </mat-select>
-          </mat-form-field>
      </div>
-     <td-code-editor tdFullScreen [(ngModel)]="model" style="height: 1000px; box-sizing: border-box;" theme="vs"
-                        automaticLayout="true"
-                        [language]="format"></td-code-editor>
-
 </div>
