@@ -2,6 +2,7 @@ import {AfterViewInit, Component, EventEmitter, OnInit} from '@angular/core';
 import {TdLoadingService, TdMediaService} from "@covalent/core";
 import {BrowserService} from "../../services/browser.service";
 import {saveAs as importedSaveAs} from "file-saver";
+import {NgxEditorModel} from "ngx-monaco-editor";
 
 @Component({
   selector: 'app-resource-viewer',
@@ -15,12 +16,18 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
 
   // Code Editor
 
-  model: string = '{ \n' +
-      "\t\"resourceType\" :" +
-      "\"...\" \n"+
-      '}';
 
-  public format="json";
+    language = 'json';
+
+    model =
+         '{ \n' +
+            "\t\"resourceType\" :" +
+            "\"...\" \n"+
+            '}'
+    ;
+
+    editorOptions = {theme: 'vs',
+    language: 'json'};
 
   validate() {
       //this._loadingService.register('overlayStarSyntax');
@@ -35,9 +42,9 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
 
               this.model = data.trim();
               if (this.model[0] =='<')  {
-                  this.format = 'xml';
+                  this.language = 'xml';
               } else {
-                  this.format = 'json';
+                  this.language = 'json';
               }
           }
       );
@@ -62,18 +69,21 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         // console.log('after init');
 
+    }
 
-
+    onInit(editor) {
+        let line = editor.getPosition();
+        console.log(line);
     }
 
     save(){
         {
             if (this.model[0]=='<')  {
-                this.format = 'xml';
+                this.language = 'xml';
             } else {
-                this.format ='json';
+                this.language ='json';
             }
-            const blob = new Blob([this.model], { type: 'text/'+this.format });
+            const blob = new Blob([this.model], { type: 'text/'+this.language });
             importedSaveAs(blob);
         }
     }

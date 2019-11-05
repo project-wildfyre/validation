@@ -10,15 +10,19 @@
                <button mat-stroked-button color="accent" [matTooltip]="'Validate'" class="text-upper" (click)="validate()"><mat-icon>done</mat-icon></button>
                <span flex></span>
                <mat-form-field color="accent">
-                    <mat-select [(value)]="format" >
+                    <mat-select [(value)]="editorOptions.language" >
                          <mat-option value="json">JSON</mat-option>
                          <mat-option value="xml">XML</mat-option>
                     </mat-select>
                </mat-form-field>
           </div>
-          <td-code-editor tdFullScreen [(ngModel)]="model" style="height: 1000px; box-sizing: border-box;" theme="vs"
-                             automaticLayout="true"
-                             [language]="format"></td-code-editor>
+         <!-- -->
 
+          <div style="overflow: hidden; height: 800px">
+               <td-code-editor tdFullScreen [(ngModel)]="model" style="height: 100%;" theme="vs"
+                               automaticLayout="true"
+                               [language]="language"></td-code-editor>
+          <!-- <ngx-monaco-editor style="height: 100%" [options]="editorOptions" [(ngModel)]="model" (onInit)="onInit($event)"></ngx-monaco-editor> -->
+          </div>
      </div>
 </div>

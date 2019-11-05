@@ -94,6 +94,8 @@ import {MatSortModule} from "@angular/material/sort";
         CovalentLoadingModule,
         MatSortModule,
 
+     //   MonacoEditorModule.forRoot()
+
     ],
   providers: [
       MessageService,
