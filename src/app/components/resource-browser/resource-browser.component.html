@@ -89,8 +89,10 @@
 
         </span>
                     <mat-card>
+                        <span *ngIf="resource != undefined">
                 <td-json-formatter [data]="resource" key="root" [levelsOpen]="8">
                 </td-json-formatter>
+                            </span>
                     </mat-card>
             </div>
         </mat-sidenav-content>
