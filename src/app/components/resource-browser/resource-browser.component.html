@@ -5,13 +5,12 @@
         <mat-sidenav mode="side" opened >
             <mat-nav-list>
                 <ng-template let-entry let-last="last" let-i="index" ngFor [ngForOf]="entries">
-                    <a mat-list-item [ngClass]="{red: selectedEntry === i}"   (click)="onClick(entry, i)" >
+                    <a mat-list-item [ngClass]="{red: selectedEntry === i}" matTooltip="{{entry.fullUrl}}"  (click)="onClick(entry, i)" >
                         <td-notification-count color="accent" [notifications]="getErrorsCount(i)">
                             <mat-icon matListAvatar>{{getIcon(i)}}</mat-icon>
                         </td-notification-count>
                         <h3 matLine> {{entry.resource.resourceType}}  </h3>
-                        <p matLine>  {{entry.fullUrl}}
-                        </p>
+                        <p matLine>  {{getName(entry)}}</p>
                     </a>
                     <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
                 </ng-template>
