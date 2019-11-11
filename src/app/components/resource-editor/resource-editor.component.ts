@@ -2,7 +2,6 @@ import {AfterViewInit, Component, EventEmitter, OnInit} from '@angular/core';
 import {TdLoadingService, TdMediaService} from "@covalent/core";
 import {BrowserService} from "../../services/browser.service";
 import {saveAs as importedSaveAs} from "file-saver";
-import {NgxEditorModel} from "ngx-monaco-editor";
 
 @Component({
   selector: 'app-resource-viewer',
