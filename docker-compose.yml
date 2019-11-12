@@ -1,0 +1,38 @@
+version: '2'
+volumes:
+  ccri-postgress: {}
+
+services:
+
+  ccrisql:
+    image: postgres:11.5
+    volumes:
+      - ccri-postgress:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=careconnect
+      - POSTGRES_USER=${CCRI_DB_USERNAME}
+      - POSTGRES_PASSWORD=${CCRI_DB_PASSWORD}
+
+  ccriserver:
+    image: thorlogic/ccri-fhirserver:latest
+    links:
+      - ccrisql
+    environment:
+      - datasource.username=${CCRI_DB_USERNAME}
+      - datasource.password=${CCRI_DB_PASSWORD}
+      - datasource.driver=org.postgresql.Driver
+      - datasource.url=jdbc:postgresql://ccrisql:5432/careconnect
+      - datasource.showSql=false
+      - datasource.showDdl=false
+      - datasource.cleardown.cron=0 19 21 * * *
+      - datasource.dialect=org.hibernate.dialect.PostgreSQL9Dialect
+    labels:
+      io.rancher.container.pull_image: always
+
+  alvalidate:
+    container_name: alvalidate
+    image: thorlogic/al-validate:latest
+    links:
+      - ccriserver
+    labels:
+      io.rancher.container.pull_image: always

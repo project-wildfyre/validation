@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {OperationOutcome} from "fhir-stu3";
 import {MessageService} from "./message.service";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +15,6 @@ export class BrowserService {
   private rawResource : string;
 
   private validation: OperationOutcome;
-
-  private config: any = {
-    'baseUrl': 'http://localhost:8186/ccri-fhir/STU3/'
-  };
 
   private resourceChange: EventEmitter<any> = new EventEmitter();
   private rawResourceChange: EventEmitter<any> = new EventEmitter();
@@ -140,7 +137,7 @@ export class BrowserService {
         headers = headers.append('Content-Type', contentType);
         headers = headers.append('Accept', 'application/fhir+json');
 
-        return this.http.post<any>(this.config.baseUrl + resource, body, {headers: headers});
+        return this.http.post<any>(environment.config.baseUrl + resource, body, {headers: headers});
     }
 
     getHeaders(contentType: boolean = true): HttpHeaders {
