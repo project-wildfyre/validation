@@ -2,6 +2,7 @@ import {AfterViewInit, Component, EventEmitter, OnInit} from '@angular/core';
 import {TdLoadingService, TdMediaService} from "@covalent/core";
 import {BrowserService} from "../../services/browser.service";
 import {saveAs as importedSaveAs} from "file-saver";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-resource-viewer',
@@ -10,7 +11,9 @@ import {saveAs as importedSaveAs} from "file-saver";
 })
 export class ResourceEditorComponent implements OnInit, AfterViewInit {
 
-  constructor(public media: TdMediaService, public browserService: BrowserService,
+  constructor(public media: TdMediaService,
+              private router:Router,
+              public browserService: BrowserService,
               private _loadingService: TdLoadingService) { }
 
   // Code Editor
@@ -55,6 +58,7 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
                   this._loadingService.register('overlayStarSyntax');
               } else {
                   this._loadingService.resolve('overlayStarSyntax');
+                  this.router.navigate(['/browse']);
               }
           }
       );
