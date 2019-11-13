@@ -5,6 +5,9 @@ th.default {padding: 3px; color: #000000;  text-align: left;}
 th {padding: 3px; font-size: 10pt;}
 td {padding: 3px; font-size: 10pt;}
 
+.link-btn::ng-deep.mat-button-focus-overlay {
+  background-color:transparent;
+}
 
 .td-search-box {
   .td-search-icon.mat-icon-button {

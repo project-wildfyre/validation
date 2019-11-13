@@ -13,8 +13,8 @@
     <td-layout-nav  toolbarTitle="Aire Logic - FHIR Validation" navigationRoute="/">
         <div td-toolbar-content layout="row" layout-align="start center" flex>
             <span flex></span>
-            <button mat-icon-button matTooltip="Load Resource" (click)="fileInput.click()">
-                <mat-icon>folder</mat-icon>
+            <button mat-icon-button matTooltip="Upload Resource" (click)="fileInput.click()">
+                <mat-icon>cloud_upload</mat-icon>
                 <input #fileInput type="file" (change)="doReadFile($event)" style="display:none"/>
             </button>
             <button mat-icon-button [disabled]="errorCount==0" matTooltip="Validation Errors" [matMenuTriggerFor]="notificationsMenu">
@@ -40,7 +40,7 @@
                     </button>
                 </td-menu>
             </mat-menu>
-            <a mat-icon-button matTooltip="View Mode" [matMenuTriggerFor]="resourceMenu"><mat-icon>developer_mode</mat-icon></a>
+            <a mat-icon-button matTooltip="View Mode" [matMenuTriggerFor]="resourceMenu"><mat-icon>developer_mode</mat-icon><mat-icon>arrow_drop_down</mat-icon></a>
         </div>
 
        <router-outlet></router-outlet>
