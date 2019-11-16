@@ -8,7 +8,7 @@ import {ResourceBrowserComponent} from "./components/resource-browser/resource-b
 const routes: Routes = [
   { path: '', component: FHIRBrowserMainComponent,
   children : [
-   { path: '', component: ResourceEditorComponent},
+     { path: '', redirectTo: 'editor', pathMatch: 'full'},
       { path: 'editor', component: ResourceEditorComponent},
       { path: 'open', component: ResourceEditorComponent},
       { path: 'browse', component: ResourceBrowserComponent},
