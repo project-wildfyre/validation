@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/fhir-browser.iml" filepath="$PROJECT_DIR$/fhir-browser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/validation.iml" filepath="$PROJECT_DIR$/validation.iml" />
     </modules>
   </component>
 </project>

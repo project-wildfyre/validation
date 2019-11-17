@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "fhir-browser": {
+    "validation": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -74,18 +74,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "fhir-browser:build"
+            "browserTarget": "validation:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "fhir-browser:build:production"
+              "browserTarget": "validation:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "fhir-browser:build"
+            "browserTarget": "validation:build"
           }
         },
         "test": {
@@ -122,15 +122,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "fhir-browser:serve"
+            "devServerTarget": "validation:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "fhir-browser:serve:production"
+              "devServerTarget": "validation:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "fhir-browser"
+  "defaultProject": "validation"
 }
