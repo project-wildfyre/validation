@@ -3,11 +3,11 @@
      <div tdFullScreen>
           <div td-toolbar-content layout="row" layout-align="start" flex>
                <div>&nbsp;</div>
-
-
                <button mat-stroked-button color="accent" [matTooltip]="'Download'"  (click)="save()"><mat-icon>cloud_download</mat-icon> Download</button>
-
                <button mat-stroked-button color="accent" [matTooltip]="'Validate'" (click)="validate()"><mat-icon>spellcheck</mat-icon> Validate</button>
+               &nbsp;
+               <td-search-input style="width:400px;" placeholder="Profile" [(ngModel)]="profile" [showUnderline]="true">
+               </td-search-input>
                <span flex></span>
                <mat-form-field color="accent">
                     <mat-select [(value)]="language" >

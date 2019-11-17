@@ -14,11 +14,14 @@ export class BrowserService {
 
   private rawResource : string;
 
+  private profile: string;
+
   private validation: OperationOutcome;
 
   private resourceChange: EventEmitter<any> = new EventEmitter();
   private rawResourceChange: EventEmitter<any> = new EventEmitter();
   private validationChange: EventEmitter<any> = new EventEmitter();
+  private profileChange: EventEmitter<any> = new EventEmitter();
 
   constructor(private http: HttpClient, private messageService: MessageService) {
 
@@ -41,6 +44,19 @@ export class BrowserService {
 
     getRawResource() {
         return this.rawResource;
+    }
+    getProfile() {
+      return this.profile;
+    }
+    setProfile(profile: string) {
+        this.profile = profile;
+        this.profileChange.emit(profile);
+    }
+    getProfileChange() {
+      return this.profileChange;
+    }
+    triggerGetProfile() {
+        return this.getProfileChange().emit(this.profile);
     }
 
   getValidationResult() : OperationOutcome {
@@ -73,12 +89,13 @@ export class BrowserService {
         this.getRawResourceChangeEmitter().emit(this.rawResource);
     }
 
-  setupResource(resource : any) {
+  setupResource(resource : any, profile: string) {
 
      let contentType = 'application/fhir+xml';
      if (resource[0] == '{') {
          contentType = 'application/fhir+json';
      }
+      this.setProfile(profile);
      // Clear previous results
       this.setValidation(undefined); // for browser and validate
       this.setRawResource(resource); // For editor
@@ -116,7 +133,11 @@ export class BrowserService {
   }
 
   public validateResource(resource) {
-      this.postContentType('$validate',resource,'application/fhir+json').subscribe(
+      var validateCmd = '$validate';
+      if (this.profile != undefined && this.profile != "") {
+          validateCmd += "?uri="+this.profile;
+      }
+      this.postContentType(validateCmd,resource,'application/fhir+json').subscribe(
           data => {
               this.setValidation(data);
           },

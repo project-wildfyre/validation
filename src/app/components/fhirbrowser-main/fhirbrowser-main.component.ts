@@ -123,7 +123,7 @@ export class FHIRBrowserMainComponent implements OnInit {
       reader.readAsText(file);
       this.loadComplete.subscribe( (data) => {
             this.clearErrors();
-            this.browserService.setupResource(data);
+            this.browserService.setupResource(data, this.browserService.getProfile());
           }
       );
       const me = this;

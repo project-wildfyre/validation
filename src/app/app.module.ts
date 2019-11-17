@@ -27,7 +27,7 @@ import {
     CovalentJsonFormatterModule, CovalentLoadingModule,
     CovalentMediaModule,
     CovalentMenuModule, CovalentMessageModule,
-    CovalentNotificationsModule,
+    CovalentNotificationsModule, CovalentSearchModule,
     CovalentTabSelectModule
 } from "@covalent/core";
 import {CovalentCodeEditorModule} from "@covalent/code-editor";
@@ -93,8 +93,9 @@ import {MatSortModule} from "@angular/material/sort";
         CovalentDialogsModule,
         CovalentLoadingModule,
         MatSortModule,
+        CovalentSearchModule,
 
-     //   MonacoEditorModule.forRoot()
+        //   MonacoEditorModule.forRoot()
 
     ],
   providers: [

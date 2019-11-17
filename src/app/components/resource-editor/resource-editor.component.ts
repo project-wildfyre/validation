@@ -22,6 +22,8 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
 
     language = 'json';
 
+    profile: string =undefined;
+
     model =
          '{ \n' +
             "\t\"resourceType\" :" +
@@ -34,7 +36,7 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
 
   validate() {
       //this._loadingService.register('overlayStarSyntax');
-      this.browserService.setupResource(this.model);
+      this.browserService.setupResource(this.model, this.profile);
   }
 
   ngOnInit() {
@@ -51,6 +53,11 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
               }
           }
       );
+      this.browserService.getProfileChange().subscribe(
+          (profile) => {
+              this.profile = profile;
+          }
+      );
 
       this.browserService.getValidationChangeEmitter().subscribe(
           (data) => {
@@ -60,7 +67,7 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
               } else {
                   this._loadingService.resolve('overlayStarSyntax');
                   console.log(this.router.url);
-                  if (this.router.url == 'editor') {
+                  if (this.router.url.includes('editor')) {
                       this.router.navigate(['/browse']);
                   }
               }
@@ -70,6 +77,9 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
       if (this.browserService.getRawResource() !== undefined) {
           console.log('trigger getRawResource');
           this.browserService.triggerGetRawResource();
+      }
+      if (this.browserService.getProfile() !== undefined) {
+          this.browserService.triggerGetProfile();
       }
 
   }
