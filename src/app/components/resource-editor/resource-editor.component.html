@@ -5,11 +5,10 @@
                <div>&nbsp;</div>
                <button mat-button color="accent" [matTooltip]="'Download'"  (click)="save()"><mat-icon>cloud_download</mat-icon> Download</button>
                <button mat-button color="accent" [matTooltip]="'Validate'" (click)="validate()"><mat-icon>spellcheck</mat-icon> Validate</button>
-               &nbsp;
-               <td-search-input style="width:70%;"  placeholder="Specify profile for resource validation" [(ngModel)]="profile" [showUnderline]="true">
+               <td-search-input style="width:70%;"  placeholder="Specify profile for resource validation (optional)" [(ngModel)]="profile" [showUnderline]="true">
                </td-search-input>
                <span flex></span>
-               <mat-form-field style="width:70px;" color="accent">
+               <mat-form-field style="width:70px;">
                     <mat-select [(value)]="language" >
                          <mat-option value="json">JSON</mat-option>
                          <mat-option value="xml">XML</mat-option>
