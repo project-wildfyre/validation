@@ -135,7 +135,7 @@ export class BrowserService {
   public validateResource(resource) {
       var validateCmd = '$validate';
       if (this.profile != undefined && this.profile != "") {
-          validateCmd += "?uri="+this.profile;
+          validateCmd += "?profile="+this.profile;
       }
       this.postContentType(validateCmd,resource,'application/fhir+json').subscribe(
           data => {
