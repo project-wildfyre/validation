@@ -24,12 +24,112 @@ export class ResourceEditorComponent implements OnInit, AfterViewInit {
 
     profile: string =undefined;
 
-    model =
-         '{ \n' +
-            "\t\"resourceType\" :" +
-            "\"...\" \n"+
-            '}'
-    ;
+    model =JSON.stringify(
+        {
+            "resourceType": "Patient",
+            "id": "1",
+            "meta": {
+                "lastUpdated": "2019-11-22T15:23:41.149+00:00",
+                "profile": [
+                    "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Patient-1"
+                ]
+            },
+            "extension": [
+                {
+                    "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-EthnicCategory-1",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "system": "https://fhir.hl7.org.uk/STU3/CodeSystem/CareConnect-EthnicCategory-1",
+                                "code": "A",
+                                "display": "British, Mixed British"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "identifier": [
+                {
+                    "extension": [
+                        {
+                            "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-NHSNumberVerificationStatus-1",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "https://fhir.hl7.org.uk/STU3/CodeSystem/CareConnect-NHSNumberVerificationStatus-1",
+                                        "code": "01",
+                                        "display": "Number present and verified"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "system": "https://fhir.nhs.uk/Id/nhs-number",
+                    "value": "9876543210"
+                },
+                {
+                    "system": "https://fhir.leedsth.nhs.uk/Id/pas-number",
+                    "value": "ABC8650149"
+                }
+            ],
+            "name": [
+                {
+                    "use": "official",
+                    "family": "Kanfeld",
+                    "given": [
+                        "Bernie"
+                    ],
+                    "prefix": [
+                        "Miss"
+                    ]
+                }
+            ],
+            "telecom": [
+                {
+                    "system": "phone",
+                    "value": "0115 9737320",
+                    "use": "home"
+                },
+                {
+                    "system": "email",
+                    "value": "bernie.kanfeld@nhsdigital.nhs.uk",
+                    "use": "home"
+                }
+            ],
+            "gender": "female",
+            "birthDate": "1998-03-19",
+            "address": [
+                {
+                    "use": "work",
+                    "line": [
+                        "Field Jardin",
+                        "Long Eaton"
+                    ],
+                    "city": "Nottingham",
+                    "district": "Derbyshire",
+                    "postalCode": "NG10 1ZZ"
+                }
+            ],
+            "maritalStatus": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/v3/MaritalStatus",
+                        "code": "S",
+                        "display": "Never Married"
+                    }
+                ]
+            },
+            "generalPractitioner": [
+                {
+                    "reference": "Practitioner/1",
+                    "display": "Dr. AA Bhatia"
+                }
+            ],
+            "managingOrganization": {
+                "reference": "Organization/1",
+                "display": "The Moir Medical Centre"
+            }
+        }, null, 2);
 
     editorOptions = {theme: 'vs',
     language: 'json'};
