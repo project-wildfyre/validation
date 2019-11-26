@@ -139,7 +139,7 @@ export class ResourceBrowserComponent implements OnInit, AfterViewInit {
     }
 
     getCodesName(concepts: CodeableConcept[]) {
-
+        if (concepts == undefined) return "";
         if (concepts.length > 0) {
             const concept = concepts[0];
             if (concept.coding != undefined && concept.coding.length > 0) {
@@ -150,6 +150,7 @@ export class ResourceBrowserComponent implements OnInit, AfterViewInit {
     }
 
     getCodeName(concept: CodeableConcept) {
+        if (concept == undefined) return "";
         if (concept.coding != undefined && concept.coding.length>0) {
             return concept.coding[0].display;
         }
