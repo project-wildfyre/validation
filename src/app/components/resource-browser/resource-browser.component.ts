@@ -86,6 +86,7 @@ export class ResourceBrowserComponent implements OnInit, AfterViewInit {
     }
 
     getName(entry: BundleEntry) :string {
+        if (entry.resource === undefined) return "";
         switch (entry.resource.resourceType) {
             case "MedicationStatement":
                 var ms: MedicationStatement = <MedicationStatement> entry.resource;

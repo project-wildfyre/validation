@@ -9,7 +9,7 @@
                         <td-notification-count color="accent" [notifications]="getErrorsCount(i)">
                             <mat-icon matListAvatar>{{getIcon(i)}}</mat-icon>
                         </td-notification-count>
-                        <h3 matLine> {{entry.resource.resourceType}}  </h3>
+                        <h3 *ngIf="entry.resource != undefined" matLine> {{entry.resource?.resourceType}}  </h3>
                         <p matLine>  {{getName(entry)}}</p>
                     </a>
                     <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
